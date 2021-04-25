@@ -88,6 +88,7 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
   }
 
   /**
+   * 由spring调用,将调用的结果交由spring容器管理
    * {@inheritDoc}
    */
   @Override

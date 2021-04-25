@@ -233,6 +233,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
       // the mapper interface is the original class of the bean
       // but, the actual class of the bean is MapperFactoryBean
       definition.getConstructorArgumentValues().addGenericArgumentValue(beanClassName); // issue #59
+      //生成bean的class修改为MapperFactoryBean,将调用其中的getObect方法
       definition.setBeanClass(this.mapperFactoryBeanClass);
 
       definition.getPropertyValues().add("addToConfig", this.addToConfig);
@@ -242,6 +243,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
       definition.setAttribute(FACTORY_BEAN_OBJECT_TYPE, beanClassName);
 
       boolean explicitFactoryUsed = false;
+      //设置sqlSessionFactory参数 这个参数实际上是个方法(setSqlSessionFactory),内部定义了通过sqlSessionFactory获取sqlSessionTemplate的逻辑
       if (StringUtils.hasText(this.sqlSessionFactoryBeanName)) {
         definition.getPropertyValues().add("sqlSessionFactory",
             new RuntimeBeanReference(this.sqlSessionFactoryBeanName));
